@@ -8,7 +8,15 @@ const getAllPatterns = async (req, res)=>{
 }
 
 const getPattern = async (req, res)=>{
-    res.send('register user')
+    const {user:{userId}, params:{id:patternId}} = req
+    
+    const pattern = await Pattern.findOne({
+        _id:patternId, createdBy:userId
+    })
+    if(!pattern){
+        throw new NotFoundError (`No fabric with id ${patternId}`)
+    }
+    res.status(StatusCodes.OK).json({pattern})
 }
 
 const createPattern = async (req, res)=>{
@@ -18,11 +26,37 @@ const createPattern = async (req, res)=>{
 }
 
 const updatePattern = async (req, res)=>{
-    res.send('register user')
+    const {
+        body:{name, garmentType, fabricTypeNeeded, fabricWeightNeeded, fabricLengthNeeded, fabricAssigned},
+        user:{userId}, 
+        params:{id:patternId}
+    } = req
+
+    if (name === ''|garmentType === ''| fabricTypeNeeded ===''| fabricWeightNeeded===''| fabricLengthNeeded ===''| fabricAssigned ===''){
+        throw new BadRequestError ('name, garment type, fabric type needed, fabric length needed, and fabric assignment status fields cannot be empty')
+    }
+    const pattern = await Pattern.findOneAndUpdate({_id:patternId, createdBy:userId}, req.body, {new:true, runValidators:true})
+    if(!pattern){
+        throw new NotFoundError (`No fabric with id ${patternId}`)
+    }
+    res.status(StatusCodes.OK).json({pattern})
 }
 
 const deletePattern = async (req, res)=>{
-    res.send('register user')
+    const {
+        body:{name, garmentType, fabricTypeNeeded, fabricWeightNeeded, fabricLengthNeeded, fabricAssigned},
+        user:{userId}, 
+        params:{id:patternId}
+    } = req
+
+    const pattern = await Pattern.findOneAndRemove({
+        _id:patternId, 
+        createdBy:userId
+    })
+    if(!pattern){
+        throw new NotFoundError (`No fabric with id ${patternId}`)
+    }
+    res.status(StatusCodes.OK).send()
 }
 
 
