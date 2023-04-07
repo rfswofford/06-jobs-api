@@ -1,0 +1,19 @@
+{
+  name: "helix dress",
+  patternCompany: "true bias",
+  garmentType: "dress",
+  fabricTypeNeeded: "knit",
+  fabricWeightNeeded: "midweight",
+  fabricLengthNeeded: "4",
+  fabricAssigned: "false",
+}
+
+{
+  patternName: "helix dress",
+  patternCompany: "true bias",
+  garmentType: "dress",
+  reqFabricType: "knit",
+  reqFabricWeight: "midweight",
+  reqFabricLength: "4",
+  patternFabricAssignment: "No",
+}

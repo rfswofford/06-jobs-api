@@ -2,7 +2,7 @@ const mongoose  = require('mongoose')
 
 const FabricSchema = new mongoose.Schema({
 
-    name:{
+    fabricName:{
         type: String, 
         maxLength: 100, 
         required: [true, 'Please provide fabric name'], 
@@ -15,8 +15,8 @@ const FabricSchema = new mongoose.Schema({
 
     },
 
-    weight:{
-        type:String, 
+    fabricWeight:{
+        type: String, 
         enum:['lightweight', 'midweight', 'heavyweight'],
         required:[true, 'Please provide fabric weight'], 
 
@@ -44,7 +44,7 @@ const FabricSchema = new mongoose.Schema({
         maxLength: 40,
     },
 
-    fabricProjectAssignment:{
+    fabricAssignment:{
         type:Boolean, 
         default: false, 
         required: [true, 'Please note if this fabric has been assigned to a project'],

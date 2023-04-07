@@ -1,6 +1,6 @@
 const Pattern = require('../models/Patterns'); 
 const {StatusCodes} = require('http-status-codes'); 
-const {BadRequestError, NotFound} = require('../errors')
+const {BadRequestError, NotFoundError} = require('../errors')
 
 const getAllPatterns = async (req, res)=>{
     const patterns = await Pattern.find({createdBy:req.user.userId}).sort('createdAt')
@@ -27,12 +27,12 @@ const createPattern = async (req, res)=>{
 
 const updatePattern = async (req, res)=>{
     const {
-        body:{name, garmentType, fabricTypeNeeded, fabricWeightNeeded, fabricLengthNeeded, fabricAssigned},
+        body:{patternName, patternCompany, garmentType, reqFabricType, reqFabricWeight, reqFabricLength, patternFabricAssignment},
         user:{userId}, 
         params:{id:patternId}
     } = req
 
-    if (name === ''|garmentType === ''| fabricTypeNeeded ===''| fabricWeightNeeded===''| fabricLengthNeeded ===''| fabricAssigned ===''){
+    if (patternName === ''|garmentType === ''| reqFabricType ===''| reqFabricWeight===''| reqFabricLength ===''| patternFabricAssignment ===''){
         throw new BadRequestError ('name, garment type, fabric type needed, fabric length needed, and fabric assignment status fields cannot be empty')
     }
     const pattern = await Pattern.findOneAndUpdate({_id:patternId, createdBy:userId}, req.body, {new:true, runValidators:true})
@@ -44,7 +44,7 @@ const updatePattern = async (req, res)=>{
 
 const deletePattern = async (req, res)=>{
     const {
-        body:{name, garmentType, fabricTypeNeeded, fabricWeightNeeded, fabricLengthNeeded, fabricAssigned},
+        body:{patternName, patternCompany, garmentType, reqFabricType, reqFabricWeight, reqFabricLength, patternFabricAssignment},
         user:{userId}, 
         params:{id:patternId}
     } = req
@@ -56,7 +56,7 @@ const deletePattern = async (req, res)=>{
     if(!pattern){
         throw new NotFoundError (`No fabric with id ${patternId}`)
     }
-    res.status(StatusCodes.OK).send()
+    res.status(StatusCodes.OK).json({msg: "The entry was deleted."})
 }
 
 

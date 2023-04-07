@@ -2,7 +2,7 @@ const mongoose  = require('mongoose')
 
 const PatternSchema = new mongoose.Schema({
 
-    name:{
+    patternName:{
         type: String, 
         maxLength: 100, 
         required: [true, 'Please provide Pattern name'], 
@@ -18,14 +18,14 @@ const PatternSchema = new mongoose.Schema({
         enum: ['pants','top', 'skirt', 'jumpsuit', 'dress', 'outerwear', 'accessory', 'swimwear', 'activewear','lingerie']
     },
   
-    fabricTypeNeeded:{
+    reqFabricType:{
         type: String,
         enum:['knit', 'woven'],
         required:[true, 'Please provide fabric type required by pattern'], 
 
     },
 
-    fabricWeightNeeded:{
+    reqFabricWeight:{
         type:String, 
         enum:['lightweight', 'midweight', 'heavyweight'],
         required:[true, 'Please provide fabric weight required by pattern'], 
@@ -33,13 +33,13 @@ const PatternSchema = new mongoose.Schema({
 
     }, 
 
-    fabricLengthNeeded:{
+    reqFabricLength:{
         type: Number, 
         required:[true, 'Please provide fabric length needed for pattern'], 
 
     },
 
-    fabricAssigned:{
+    patternFabricAssignment:{
         type:Boolean, 
         default: false, 
         required: [true, 'Please note if this pattern has been assigned to a fabric'],
