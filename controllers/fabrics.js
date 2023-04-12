@@ -30,12 +30,12 @@ const createFabric = async (req, res)=>{
 
 const updateFabric = async (req, res)=>{
     const {
-        body:{name, fabricType, weight, fabricLength, fabricProjectAssignment},
+        body:{fabricName, fabricType, fabricWeight, fabricLength,fabricContent, fabricColor, fabricStore, fabricAssignment},
         user:{userId}, 
         params:{id:fabricId}
     } = req
 
-    if (name === ''|fabricType === ''| weight ===''| fabricLength ===''| fabricProjectAssignment ===''){
+    if (fabricName === ''|fabricType === ''| fabricWeight ===''| fabricLength ===''| fabricAssignment ===''){
         throw new BadRequestError ('name, fabric type, weight, fabric length, and fabric project assignment fields cannot be empty')
     }
     const fabric = await Fabric.findOneAndUpdate({_id:fabricId, createdBy:userId}, req.body, {new:true, runValidators:true})
@@ -47,7 +47,7 @@ const updateFabric = async (req, res)=>{
 
 const deleteFabric = async (req, res)=>{
     const {
-        body:{name, fabricType, weight, fabricLength, fabricProjectAssignment},
+        body:{fabricName, fabricType, fabricWeight, fabricLength, fabricAssignment},
         user:{userId}, 
         params:{id:fabricId}
     } = req
@@ -59,7 +59,7 @@ const deleteFabric = async (req, res)=>{
     if(!fabric){
         throw new NotFoundError (`No fabric with id ${fabricId}`)
     }
-    res.status(StatusCodes.OK).send()
+    res.status(StatusCodes.OK).json({msg: "The entry was deleted."})
 }
 
 
