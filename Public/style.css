@@ -1,0 +1,67 @@
+body {
+
+    /* Background */
+    background-image: url('sewingappbackground2.jpg');
+
+  
+    /* Full height */
+    height: 10%;
+  
+    /* Center and scale the image nicely */
+    background-position: left;
+    background-repeat: repeat;
+    background-color:#FCF9DA;
+}
+
+table, th, td {
+    color: #FCF9DA;  
+    border-radius: 25px;
+    background:#2A383F;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px;
+    padding:15px;
+    margin:8px;
+    border-collapse: collapse;
+
+}
+
+h1{
+    font-size: 50px;
+    font-weight: bold;
+    color: #2A383F;
+    background-color: #FCF9DA;
+    padding:10px;
+    text-align: center; 
+}
+
+h2{
+    font-size:30px;
+    font-weight: bold;
+    color:#2A383F;
+    background-color: #FCF9DA;
+    padding:10px;
+    width:8%; 
+    border-radius: 25px;
+    border-color: #2A383F;
+    border:2px;
+}
+
+
+button{
+    background-color:#BAB2A7;
+    color:#2A383F;
+    font-weight:bold;
+    border-radius: 20px;
+    border: 2px;
+    border-color:#BAB2A7;
+    box-shadow: 2px 5px #bab2a795;
+    padding: 15px;
+    margin:5px;
+ }
+ 
+ button:hover{
+     background-color: #DB636F;
+     border-color: #DB636F;
+ }
+ 
