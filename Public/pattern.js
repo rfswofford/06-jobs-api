@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
   
-        if (count > 0) {
+        if (count.length > 0) {
           fabricMatchMessage.textContent = "";
           fabricMatchesTable.style.display = "block";
         } else {

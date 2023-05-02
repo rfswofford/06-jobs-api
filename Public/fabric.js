@@ -441,7 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      if (count > 0) {
+      if (count.length > 0) {
         patternMatchMessage.textContent = "";
         patternMatchesTable.style.display = "block";
       } else {

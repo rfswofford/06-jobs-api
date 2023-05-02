@@ -64,4 +64,37 @@ button{
      background-color: #DB636F;
      border-color: #DB636F;
  }
+
+ #edit-fabric { 
+    color: #FCF9DA;  
+    border-radius: 25px;
+    background:#2A383F;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px;
+    padding:15px;
+    margin:8px;
+}
+ 
+#edit-pattern { 
+    color: #FCF9DA;  
+    border-radius: 25px;
+    background:#2A383F;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px;
+    padding:15px;
+    margin:8px;
+}
+
+#message, #fabrics-message, #patterns-message, #fabric-match-message, #pattern-match-message {
+    color: #FCF9DA;  
+    border-radius: 25px;
+    background:#2A383F;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px;
+    padding:15px;
+    margin:8px;
+}
  
