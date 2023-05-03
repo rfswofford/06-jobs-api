@@ -71,6 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const editCancel = document.getElementById("fabric-edit-cancel");
     const editFabric = document.getElementById("edit-fabric");
 
+    const patterns = document.getElementById("patterns");
+    const patternsTable = document.getElementById("patterns-table");
+    const patternsTableHeader = document.getElementById("patterns-table-header");
+    const addPattern = document.getElementById("add-pattern");
+    const editPattern = document.getElementById("edit-pattern");
+    const patternName = document.getElementById("pattern-name");
+    const patternCompany = document.getElementById("pattern-company");
+    const garmentType = document.getElementById("garment-type");
+    const reqFabricType = document.getElementById("req-fabric-type");
+    const reqFabricWeight = document.getElementById("req-fabric-weight");
+    const reqFabricLength = document.getElementById("req-fabric-length");
+    const patternFabricAssignment = document.getElementById("pattern-fabric-assign")
+
     const patternMatches = document.getElementById("pattern-matches");
     const patternMatchMessage = document.getElementById("pattern-match-message")
     const patternMatchesTable = document.getElementById("pattern-matches-table");
@@ -406,31 +419,38 @@ document.addEventListener("DOMContentLoaded", () => {
               Authorization: `Bearer ${token}`,
             },
           });
+          console.log (response)
           const data = await response.json();
+          console.log(data); 
           var children1 = patternMatchFabricHeader;
           var children2 = [patternMatchTableHeader];
+          console.log (children1); 
+          console.log(children2); 
           if (response.status === 200) {
-            if (data.count === 0) {
-              let topRowHTML = `<td>${data.fabrics[i].fabricName}</td>`;
+            if (data.patMatchesArray.length === 0) {
+              patternMatchMessage.textContent = `There are no matching patterns for ${e.target.dataset.id.fabricName} fabric`;
+              patternMatchesTable.style.display = "none"; 
+              /*let topRowHTML = `<td>${data.fabrics[i].fabricName}</td>`;
               let topRowEntry = document.createElement("tr");
               topRowEntry.innerHTML = topRowHTML;
               children1.push(topRowEntry);
-              patternMatchesTable.replaceChildren(...children1,children2); // clear this for safety
+              patternMatchesTable.replaceChildren(...children1,children2); // clear this for safety*/
               return 0;
             } else {
-                let topRowHTML = `<td>${data.fabrics[i].fabricName}</td>`;
+                let topRowHTML = `<td>${data.fabricName}</td>`;
+                console.log(topRowHTML)
                 let topRowEntry = document.createElement("tr");
                 topRowEntry.innerHTML = topRowHTML;
                 children1.push(topRowEntry);
-              for (let i = 0; i < data.patterns.length; i++) {
-                let rowHTML = `<td>${data.patterns[i].patternName}</td><td>${data.patterns[i].patternCompany}</td><td>${data.patterns[i].garmentType}</td><td>${data.patterns[i].reqFabricType}</td><td>${data.patterns[i].reqFabricWeight}</td><td>${data.patterns[i].reqFabricLength}</td><td>${data.patterns[i].patternFabricAssignment}</td>`;
+              for (let i = 0; i < data.patMatchesArray.length; i++) {
+                let rowHTML = `<td>${data.patMatchesArray[i].patternName}</td><td>${data.patMatchesArray[i].patternCompany}</td><td>${data.patMatchesArray[i].garmentType}</td><td>${data.patMatchesArray[i].reqFabricType}</td><td>${data.patMatchesArray[i].reqFabricWeight}</td><td>${data.patMatchesArray[i].reqFabricLength}</td><td>${data.patMatchesArray[i].patternFabricAssignment}</td>`;
                 let rowEntry = document.createElement("tr");
                 rowEntry.innerHTML = rowHTML;
                 children2.push(rowEntry);
               }
               patternMatchesTable.replaceChildren(...children1, children2);
             }
-            return data.count;
+            return data.patMatchesArray.length;
           } else {
            message.textContent = data.msg;
             return 0;
@@ -441,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      if (count.length > 0) {
+      if (count > 0) {
         patternMatchMessage.textContent = "";
         patternMatchesTable.style.display = "block";
       } else {
@@ -449,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
         patternMatchesTable.style.display = "none";
       }
       patternMatches.style.display = "block";
-      showing = fabrics;
+      showing = patternMatches;
       }
     }
     )

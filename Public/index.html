@@ -192,6 +192,47 @@
             <button type="button" id="adding-fabric">add</button>
             <button type="button" id="fabric-edit-cancel">cancel</button>
         </form>
+    </div>    
+    <h2>Fabric Matches</h2>
+    <div id="fabric-matches" style="display:none;">
+        <p id="fabric-match-message"></p>
+        <table id="fabric-matches-table" style="display:none;">
+            <tr id="fabric-match-pattern-header">
+                <th>Pattern</th>
+            </tr>
+             <tr id="fabric-matches-table-header">
+                <th>Name</th>
+                <th>Type</th>
+                <th>Weight</th>
+                <th>Length</th>
+                <th>Fiber Content</th>
+                <th>Color</th>
+                <th>Fabric Store</th>
+                <th>Is this fabric assigned to a project?</th>
+                 <th colspan="2"></th>
+             </tr>
+        </table>
+        <button type="button" id="Home">Home</button>
+    </div>
+    <h2>Pattern Matches</h2>
+    <div id="pattern-matches" style="display:none;">
+        <p id="pattern-match-message"></p>
+        <table id="pattern-matches-table" style="display:none;">
+            <tr id="pattern-match-fabric-header">
+                <th>Fabric</th>
+            </tr>
+            <tr id="patterns-matches-table-header">
+                <th>Pattern Name</th>
+                <th>Pattern Company</th>
+                <th>Garment Type</th>
+                <th>Required Fabric Type</th>
+                <th>Required Fabric Weight</th>
+                <th>Required Fabric Length</th>
+                <th>Is there a fabric assigned to this pattern?</th>
+                <th colspan="2"></th>
+            </tr>
+        </table>
+        <button type="button" id="find-new-pattern-match">Find New Match</button>
     </div>
     
     <script src="./fabric.js"></script>

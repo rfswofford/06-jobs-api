@@ -407,3 +407,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   })
 })
+
+
+  getPerson.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const index1 = encodeURIComponent(index.value);
+    console.log("index 1 is ", index1);
+    try {
+      const response = await fetch(`/api/v1/people/${index1}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      result.textContent = JSON.stringify(data);
+    } catch (err) {
+      result.textContent = err.message;
+    }

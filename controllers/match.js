@@ -56,6 +56,7 @@ const getAllPatternMatch = async (req, res)=>{
 
     const fabricType = fabric.fabricType
     const fabricWeight = fabric.fabricWeight
+    const fabricName = fabric.fabricName
 
     const patterns = await Pattern.find({createdBy:req.user.userId}).sort('createdAt')
 
@@ -69,7 +70,7 @@ const getAllPatternMatch = async (req, res)=>{
     if(patMatchesArray.length === 0){
         throw new NotFoundError (`No patterns match this fabric`)
     } else if (patMatchesArray.length > 0){
-        res.status(StatusCodes.OK).json(patMatchesArray)
+        res.status(StatusCodes.OK).json({fabricName, patMatchesArray})
     }
 }
 

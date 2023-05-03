@@ -361,11 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
              var children2 = [fabricMatchTableHeader];
             if (response.status === 200) {
               if (data.count === 0) {
-                let topRowHTML = `<td>${e.target.dataset.id.patternName}</td>`;
-                let topRowEntry = document.createElement("tr");
-                topRowEntry.innerHTML = topRowHTML;
-                children1.push(topRowEntry);
-                fabricMatchesTable.replaceChildren(...children1,children2); // clear this for safety
+                fabricMatchMessage.textContent = `There are no matching fabrics for ${e.target.dataset.id.patternName} pattern`;
+                fabricMatchesTable.style.display = "none"; 
                 return 0;
               } else {
                   let topRowHTML = `<td>${e.target.dataset.id.patternName}</td>`;
