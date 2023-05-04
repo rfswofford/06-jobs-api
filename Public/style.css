@@ -13,9 +13,8 @@ body {
     background-color:#FCF9DA;
 }
 
-table{
+table,td,th,tr{
     color: #FCF9DA;  
-    border-radius: 25px;
     background:#2A383F;
     padding: 20px;
     border: 2px;
@@ -24,10 +23,8 @@ table{
 
 }
 
-th, td{
-    color: #FCF9DA; 
-    background:#2A383F;
-    border-collapse: collapse; 
+table{
+    border-radius: 25px;
 }
 
 h1{
