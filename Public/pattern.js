@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const patternsMessage = document.getElementById("patterns-message");
     const editCancel = document.getElementById("pattern-edit-cancel");
 
-    const fabricMatches = document.getElementById("fabric-matches");
-    const fabricMatchMessage = document.getElementById("fabric-match-message")
-    const fabricMatchesTable = document.getElementById("fabric-matches-table");
-    const fabricMatchPatternHeader = document.getElementById("fabric-match-pattern-header");
-    const fabricMatchTableHeader = document.getElementById("fabric-matches-table-header");
+    let fabricMatches = document.getElementById("fabric-matches");
+    let fabricMatchMessage = document.getElementById("fabric-match-message")
+    let fabricMatchesTable = document.getElementById("fabric-matches-table");
+    let fabricMatchPatternHeader = document.getElementById("fabric-match-pattern-header");
+    let fabricMatchTableHeader = document.getElementById("fabric-matches-table-header");
     const findNewFabMatch = document.getElementById("find-new-fabric-match");
   
     let showing = logonRegister;
@@ -166,7 +166,14 @@ document.addEventListener("DOMContentLoaded", () => {
         patternFabricAssignment.value = "";
         thisEvent = new Event("startDisplay");
         document.dispatchEvent(thisEvent);
-      } else if (e.target === addingPattern) {
+      } else if (e.target === findNewFabMatch){
+        showing.style.display = "none";
+        fabricMatchesTable.value= "";
+        fabricMatches.value = "";
+        fabricMatchMessage.value="";
+        patterns.style.display = "block"; 
+        showing=patterns;  
+    }else if (e.target === addingPattern) {
         if (!editPattern.dataset.id) {
           // this is an attempted add
           suspendInput = true;
@@ -342,12 +349,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }else if (e.target.classList.contains("fabricMatchButton")) {
         editPattern.dataset.id = e.target.dataset.id;
         suspendInput = true;
-  
-        const count = async (fabricMatchesTable,
-          fabricMatchPatternHeader,
-          fabricMatchTableHeader,
-          token,
-          message)=>{
+        let count = 0; 
+
         try {
             const response = await fetch(`/api/v1/findMatch/matchFabric/${e.target.dataset.id}`, {
               method: "GET",
@@ -357,27 +360,27 @@ document.addEventListener("DOMContentLoaded", () => {
               },
             });
             const data = await response.json();
-            var children1 = fabricMatchPatternHeader;
-             var children2 = [fabricMatchTableHeader];
+            var children = [fabricMatchPatternHeader,fabricMatchTableHeader];
             if (response.status === 200) {
-              if (data.count === 0) {
+              if (data.fabMatchesArray.length === 0) {
                 fabricMatchMessage.textContent = `There are no matching fabrics for ${e.target.dataset.id.patternName} pattern`;
                 fabricMatchesTable.style.display = "none"; 
-                return 0;
+                count = 0;
               } else {
-                  let topRowHTML = `<td>${e.target.dataset.id.patternName}</td>`;
+                  let topRowHTML = `<td>${data.patternName}</td>`;
                   let topRowEntry = document.createElement("tr");
                   topRowEntry.innerHTML = topRowHTML;
-                  children1.push(topRowEntry);
-                for (let i = 0; i < data.fabrics.length; i++) {
-                  let rowHTML = `<td>${data.fabrics[i].fabricName}</td><td>${data.fabrics[i].fabricType}</td><td>${data.fabrics[i].fabricWeight}</td><td>${data.fabrics[i].fabricLength}</td><td>${data.fabrics[i].fabricContent}</td><td>${data.fabrics[i].fabricColor}</td><td>${data.fabrics[i].fabricStore}</td><td>${data.fabrics[i].fabricAssignment}</td>${editButton} ${deleteButton} ${fabricMatchButton}`;
+                  children.splice(1, 0, topRowEntry);
+                for (let i = 0; i < data.fabMatchesArray.length; i++) {
+                  let rowHTML = `<td>${data.fabMatchesArray[i].fabricName}</td><td>${data.fabMatchesArray[i].fabricType}</td><td>${data.fabMatchesArray[i].fabricWeight}</td><td>${data.fabMatchesArray[i].fabricLength}</td><td>${data.fabMatchesArray[i].fabricContent}</td><td>${data.fabMatchesArray[i].fabricColor}</td><td>${data.fabMatchesArray[i].fabricStore}</td><td>${data.fabMatchesArray[i].fabricAssignment}</td>`;
                   let rowEntry = document.createElement("tr");
                   rowEntry.innerHTML = rowHTML;
-                  children2.push(rowEntry);
+                  children.push(rowEntry);
                 }
-                fabricMatchesTable.replaceChildren(...children1, children2);
+                fabricMatchesTable.replaceChildren(...children);
+                count = data.fabMatchesArray.length
               }
-              return data.count;
+
             } else {
              message.textContent = data.msg;
               return 0;
@@ -386,18 +389,23 @@ document.addEventListener("DOMContentLoaded", () => {
             message.textContent = "A communication error occurred.";
             return 0;
           }
-        }
+        
   
-        if (count.length > 0) {
+        if (count > 0) {
           fabricMatchMessage.textContent = "";
           fabricMatchesTable.style.display = "block";
         } else {
           fabricMatchMessage.textContent ="There are no fabrics that match this pattern";
+          fabricMatchMessage.style.display = "block"
           fabricMatchesTable.style.display = "none";
         }
         fabricMatches.style.display = "block";
-        showing = fabrics;
+        showing = fabricMatches;
+        suspendInput=false
+
         }
-      }
-      )
-  })
+
+    }    
+      
+  )
+})
